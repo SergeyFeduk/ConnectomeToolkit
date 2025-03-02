@@ -11,6 +11,8 @@ __pycache__/
 *.npz
 *.h5
 *.parquet
+*.cartridge
+
 Connectomes/
 OBSOLETE/
 parquet_output/

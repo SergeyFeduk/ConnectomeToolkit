@@ -2,7 +2,7 @@ import random
 import numpy as np
 from tqdm import tqdm
 from collections import defaultdict
-from src.methods.simulation_method import SimulationMethod
+from src.methods import SimulationMethod
 
 class LeakyIntegrateAndFireParameters():
     def __init__(self, rest_voltage : float = -70, membrane_resistance : float = 10, tau_membrane : float = 10, 

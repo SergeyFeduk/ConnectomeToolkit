@@ -1,4 +1,4 @@
-from src.serialization.cartridge import Cartridge
+from src.serialization import Cartridge
 import plotly.graph_objects as go
 
 def plot_cartridge_3d(cartridge : Cartridge, show_connections : bool = True):

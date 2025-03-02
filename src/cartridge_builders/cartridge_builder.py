@@ -1,8 +1,7 @@
 import os.path
 import polars as pl
 
-from src.serialization.cartridge import Cartridge
-from src.cartridge_builders.filters.cartridge_filter import CartridgeFilterPayload
+from src.serialization import Cartridge
 
 class CartridgeBuilder():
     def __init__(self, dataset_name : str, directory : str = None):
@@ -55,5 +54,5 @@ class CartridgeBuilder():
         )
         return cartridge
 
-from src.cartridge_builders.filters.cartridge_filter import CartridgeFilter
-from src.cartridge_builders.selectors.cartridge_selector import CartridgeSelector
+from src.cartridge_builders.filters import CartridgeFilter, CartridgeFilterPayload
+from src.cartridge_builders.selectors import CartridgeSelector

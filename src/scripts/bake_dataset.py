@@ -1,6 +1,6 @@
-import argparse
-import yaml
 import polars as pl
+import yaml
+import argparse
 import os
 
 #Parse arguments

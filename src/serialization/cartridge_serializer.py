@@ -1,5 +1,5 @@
 import pickle
-from src.serialization.cartridge import Cartridge
+from src.serialization import Cartridge
 
 class CartridgeSerializer():
     class SerializationError(Exception):

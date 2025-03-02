@@ -1,15 +1,13 @@
 import polars as pl
 import numpy as np
 
-from src.cartridge_builders.cartridge_builder import CartridgeBuilder
-from src.serialization.cartridge_serializer import CartridgeSerializer
+from src.serialization import CartridgeSerializer
 
-from src.cartridge_builders.filters.type_filter import TypeFilter
-from src.cartridge_builders.selectors.combine_selector import CombineSelector
-from src.cartridge_builders.filters.cluster_filter import ClusterFilter
-from src.cartridge_builders.filters.neighbour_filter import NeighbourFilter
+from src.cartridge_builders import CartridgeBuilder
+from src.cartridge_builders.filters import TypeFilter, ClusterFilter, NeighbourFilter
+from src.cartridge_builders.selectors import CombineSelector
 
-from src.plotting.cartridge.plot_cartridge_3d import plot_cartridge_3d
+from src.plotting.cartridge import plot_cartridge_3d
 
 builder = CartridgeBuilder("Drosophila_140k")
 
@@ -32,5 +30,5 @@ builder.select(CombineSelector([selected_neurons]))
 
 cartridge = builder.build_cartridge()
 print(cartridge)
-#plot_cartridge_3d(cartridge).show()
+plot_cartridge_3d(cartridge).show()
 CartridgeSerializer.serialize("PhotoRN.cartridge", cartridge)

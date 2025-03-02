@@ -1,4 +1,3 @@
-
 class Cartridge():
     def __init__(self, neuron_type_list, connections_list, neuron_positions_dict):
         self.neuron_type_list = neuron_type_list

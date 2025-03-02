@@ -1,5 +1,5 @@
 import polars as pl
-from src.cartridge_builders.filters.cartridge_filter import CartridgeFilter, CartridgeFilterPayload
+from src.cartridge_builders.filters import CartridgeFilter, CartridgeFilterPayload
 
 class IndexFilter(CartridgeFilter):
     def __init__(self, target_indices : list[int]):

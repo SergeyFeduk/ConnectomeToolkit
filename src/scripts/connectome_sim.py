@@ -1,13 +1,10 @@
-from src.serialization.cartridge_serializer import CartridgeSerializer, Cartridge
+from src.serialization import CartridgeSerializer, Cartridge
 
-from src.methods.integrate_and_fire import LeakyIntegrateAndFire
-from src.excitation_functions.smooth_bump import smooth_bump
-from src.utils.get_synaptic_lookup import get_synaptic_lookup
+from src.methods import LeakyIntegrateAndFire
+from src.excitation_functions import smooth_bump
+from src.utils import get_synaptic_lookup
 
-from src.plotting.simulation.fire_timing import plot_fire_timings
-from src.plotting.simulation.fire_by_type import plot_spike_counts_by_type
-from src.plotting.simulation.animated_position import plot_animated_neurons_firing
-from src.plotting.simulation.fire_rate_graph import plot_fire_rate_graph
+from src.plotting.simulation import plot_fire_timings, plot_spike_counts_by_type, plot_animated_neurons_firing, plot_fire_rate_graph
 
 cartridge : Cartridge = CartridgeSerializer.deserialize("PhotoRN.cartridge")
 
