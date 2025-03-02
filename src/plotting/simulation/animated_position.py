@@ -4,15 +4,10 @@ import numpy as np
 def plot_animated_neurons_firing(loaded_neuron_coordinates_dict, time, spike_times, frame_duration=10, skip_frames=0):
     neuron_positions = []
     neuron_ids_for_plotting = []
-    for root_id, position_str in loaded_neuron_coordinates_dict.items():
-        coords_str_list = position_str.strip('[]').split()
-        try:
-            x, y, z = map(int, coords_str_list)
-            if np.isfinite(x) and np.isfinite(y) and np.isfinite(z):
-                neuron_positions.append([x, y, z])
-                neuron_ids_for_plotting.append(root_id)
-        except ValueError:
-            continue
+
+    for root_id, position_list in loaded_neuron_coordinates_dict.items():
+        neuron_ids_for_plotting.append(root_id)
+        neuron_positions.append(position_list)
 
     neuron_positions_np = np.array(neuron_positions)
     color_timesteps = []

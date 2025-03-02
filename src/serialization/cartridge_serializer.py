@@ -5,13 +5,17 @@ class CartridgeSerializer():
     class SerializationError(Exception):
         """Custom exception raised for cartridge serialization/deserialization errors."""
         pass
-    def serialize(path : str, neuron_type_list, connections_list, neuron_coordinates_dict):
-        cartridge = Cartridge(neuron_type_list, connections_list, neuron_coordinates_dict)
+    
+    def serialize(path : str, cartridge : Cartridge):
         try:
             with open(path, 'wb') as file:
                 pickle.dump(cartridge, file)
         except pickle.PicklingError as e:
             raise CartridgeSerializer.SerializationError(f"Failed to save cartridge: {e}")
+
+    def serialize_data(path : str, neuron_type_list, connections_list, neuron_coordinates_dict):
+        cartridge = Cartridge(neuron_type_list, connections_list, neuron_coordinates_dict)
+        CartridgeSerializer.serialize(cartridge)
 
     def deserialize(path : str) -> Cartridge:
         try:

@@ -1,0 +1,19 @@
+dataset:
+  name: "Drosophila_140k"
+  neurons:
+    #Neuron types
+    type_file: "consolidated_cell_types.csv"
+    type_key_column: "root_id"
+    type_column: "primary_type"
+    #Neuron coordinates
+    position_file: "coordinates.csv"
+    position_key_column: "root_id"
+    position_column: "position"
+  connections:
+    connections_file: "connections_princeton_no_threshold.csv"
+    pre_column: "pre_pt_root_id"
+    post_column: "post_pt_root_id"
+    weights_column: "syn_count"
+
+    sign_column: "nt_type"
+    sign_format: "name"

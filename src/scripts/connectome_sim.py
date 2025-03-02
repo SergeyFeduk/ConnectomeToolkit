@@ -4,12 +4,12 @@ from src.methods.integrate_and_fire import LeakyIntegrateAndFire
 from src.excitation_functions.smooth_bump import smooth_bump
 from src.utils.get_synaptic_lookup import get_synaptic_lookup
 
-from src.plotting.fire_timing import plot_fire_timings
-from src.plotting.fire_by_type import plot_spike_counts_by_type
-from src.plotting.animated_position import plot_animated_neurons_firing
-from src.plotting.fire_rate_graph import plot_fire_rate_graph
+from src.plotting.simulation.fire_timing import plot_fire_timings
+from src.plotting.simulation.fire_by_type import plot_spike_counts_by_type
+from src.plotting.simulation.animated_position import plot_animated_neurons_firing
+from src.plotting.simulation.fire_rate_graph import plot_fire_rate_graph
 
-cartridge : Cartridge = CartridgeSerializer.deserialize("Medulla2000.cartridge")
+cartridge : Cartridge = CartridgeSerializer.deserialize("PhotoRN.cartridge")
 
 #Simulation parameters
 duration = 100 #In ms
@@ -39,7 +39,7 @@ time = lif.time
 spike_times = lif.spike_times
 
 # Plot everything
-plot_animated_neurons_firing(cartridge.neuron_coordinates_dict, time, spike_times, 10, 0).show(rendermode="webgl")
+plot_animated_neurons_firing(cartridge.neuron_positions_dict, time, spike_times, 10, 0).show(rendermode="webgl")
 plot_fire_timings(spike_times, neuron_ids, time).show(rendermode="webgl")
 plot_spike_counts_by_type(spike_times, neuron_types).show(rendermode="webgl")
 plot_fire_rate_graph(spike_times, neuron_ids, time, 5).show(rendermode="webgl")

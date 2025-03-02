@@ -10,14 +10,16 @@ __pycache__/
 *.pkl
 *.npz
 *.h5
+*.parquet
 Connectomes/
 OBSOLETE/
+parquet_output/
 
 #Internal scripts
 src/scripts/connectome.py
 src/scripts/prefilter_synapses.py
 src/scripts/combine_to_cartridge.py
-
+TODO.txt
 # Log files
 *.log
 *.tmp
