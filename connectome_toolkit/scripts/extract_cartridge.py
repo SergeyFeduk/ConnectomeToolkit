@@ -1,13 +1,13 @@
 import polars as pl
 import numpy as np
 
-from src.serialization import CartridgeSerializer
+from connectome_toolkit.serialization import CartridgeSerializer
 
-from src.cartridge_builders import CartridgeBuilder
-from src.cartridge_builders.filters import TypeFilter, ClusterFilter, NeighbourFilter
-from src.cartridge_builders.selectors import CombineSelector
+from connectome_toolkit.cartridge_builders import CartridgeBuilder
+from connectome_toolkit.cartridge_builders.filters import TypeFilter, ClusterFilter, NeighbourFilter
+from connectome_toolkit.cartridge_builders.selectors import CombineSelector
 
-from src.plotting.cartridge import plot_cartridge_3d
+from connectome_toolkit.plotting.cartridge import plot_cartridge_3d
 
 builder = CartridgeBuilder("Drosophila_140k")
 
@@ -30,5 +30,5 @@ builder.select(CombineSelector([selected_neurons]))
 
 cartridge = builder.build_cartridge()
 print(cartridge)
-plot_cartridge_3d(cartridge).show()
+plot_cartridge_3d(cartridge, False).show()
 CartridgeSerializer.serialize("PhotoRN.cartridge", cartridge)

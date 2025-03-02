@@ -1,10 +1,10 @@
-from src.serialization import CartridgeSerializer, Cartridge
+from connectome_toolkit.serialization import CartridgeSerializer, Cartridge
 
-from src.methods import LeakyIntegrateAndFire
-from src.excitation_functions import smooth_bump
-from src.utils import get_synaptic_lookup
+from connectome_toolkit.methods import LeakyIntegrateAndFire
+from connectome_toolkit.excitation_functions import smooth_bump
+from connectome_toolkit.utils import get_synaptic_lookup
 
-from src.plotting.simulation import plot_fire_timings, plot_spike_counts_by_type, plot_animated_neurons_firing, plot_fire_rate_graph
+from connectome_toolkit.plotting.simulation import plot_fire_timings, plot_spike_counts_by_type, plot_animated_neurons_firing, plot_fire_rate_graph
 
 cartridge : Cartridge = CartridgeSerializer.deserialize("PhotoRN.cartridge")
 

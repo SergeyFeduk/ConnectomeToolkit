@@ -1,5 +1,5 @@
 import plotly.graph_objects as go
-from src.utils import calculate_population_firing_rate
+from connectome_toolkit.utils import calculate_population_firing_rate
 
 def plot_fire_rate_graph(spike_times, neuron_ids, time, window_size_ms = 5):
     time_points_fr, firing_rates = calculate_population_firing_rate(spike_times, neuron_ids, time, window_size_ms)

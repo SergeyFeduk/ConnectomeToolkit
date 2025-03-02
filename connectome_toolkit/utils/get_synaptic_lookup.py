@@ -1,4 +1,4 @@
-from src.utils import get_synaptic_sign
+from connectome_toolkit.utils import get_synaptic_sign
 
 def get_synaptic_lookup(loaded_connections_list, max_weight : float, weight_coefficient):
     synapses = {}

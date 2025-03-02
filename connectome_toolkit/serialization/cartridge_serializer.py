@@ -1,5 +1,5 @@
 import pickle
-from src.serialization import Cartridge
+from connectome_toolkit.serialization import Cartridge
 
 class CartridgeSerializer():
     class SerializationError(Exception):

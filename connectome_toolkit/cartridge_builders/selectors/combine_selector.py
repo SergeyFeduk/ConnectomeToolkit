@@ -1,5 +1,5 @@
 import polars as pl
-from src.cartridge_builders.selectors.cartridge_selector import CartridgeSelector
+from connectome_toolkit.cartridge_builders.selectors.cartridge_selector import CartridgeSelector
 
 class CombineSelector(CartridgeSelector):
     def __init__(self, neuron_frames : list[pl.DataFrame]):
