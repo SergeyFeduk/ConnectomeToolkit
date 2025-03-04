@@ -18,7 +18,7 @@ excitation_params = {
     'rise_rate': 2,
     'fade_start': .28,
     'fade_rate': 0.9,
-    'amplitude': 40
+    'amplitude': 10
 }
 max_synapse_weight = 100
 synapse_coefficient = 0.013
