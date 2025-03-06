@@ -1,3 +1,2 @@
-from .get_synaptic_sign import get_synaptic_sign
 from .get_synaptic_lookup import get_synaptic_lookup
 from .calculate_population_firing_rate import calculate_population_firing_rate

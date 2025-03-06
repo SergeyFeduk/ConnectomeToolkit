@@ -1,37 +1,26 @@
 import polars as pl
-import yaml
 import argparse
 import os
 
+from connectome_toolkit.dataset_baker import DatasetConfig, extract_positions, extract_connections
+
 #Parse arguments
-parser = argparse.ArgumentParser(prog = "Dataset baker", description = "Bake any dataset into file compatible with this ConnectomeToolkit")
+parser = argparse.ArgumentParser(prog = "Dataset baker", description = "Bake any dataset into file compatible with ConnectomeToolkit")
 parser.add_argument("-c", "--config")
 parser.add_argument("-o", "--output_dir")
 args = parser.parse_args()
 
 output_dir = "parquet_output"
-#Load dataset using YAML config
-try:
-    config_file = args.config
-    config = yaml.load(open(config_file, "r"), yaml.CLoader)
-    #Validate config
-    dataset_config = config['dataset']
-    dataset_name = dataset_config['name']
-    neurons_config = dataset_config['neurons']
-    connections_config = dataset_config['connections']
-    #Output directory
-    if args.output_dir:
+if args.output_dir:
         output_dir = args.output_dir
-except FileNotFoundError as e:
-    raise FileNotFoundError(f"Did not find config file: {e}")
-except KeyError as e:
-    raise KeyError(f"Dataset structure if invalid: {e}")
+config : DatasetConfig = DatasetConfig.load(args.config)
+dataset_name = config.dataset["name"]
 
 #Read original files
 print("Reading files")
-type_filepath = neurons_config.get('type_file')
-position_filepath = neurons_config.get('position_file', None)
-connections_filepath = connections_config.get('connections_file')
+type_filepath = config.neurons.get('type_file')
+position_filepath = config.neurons.get('position_file', None)
+connections_filepath = config.connections.get('connections_file')
 
 type_file = pl.read_csv(type_filepath)
 if position_filepath:
@@ -40,31 +29,12 @@ connections_file = pl.read_csv(connections_filepath)
 #Restructure dataframes to map to our data structure
 print("Baking dataset")
 type_data = type_file.rename({
-    neurons_config['type_key_column']: "neuron_id",
-    neurons_config['type_column']: "neuron_type"
+    config.neurons['type_key_column']: "neuron_id",
+    config.neurons['type_column']: "neuron_type"
 })
 if position_filepath:
-    position_data = position_file.rename({
-        neurons_config['position_key_column']: "neuron_id",
-        neurons_config['position_column']: "neuron_position"
-    })
-    #TODO: This should be generalized and defined in config
-    position_data = position_data.with_columns(
-        pl.col("neuron_position")
-        .str.replace_all(r"\[|\]", "") #Remove brackets
-        .str.strip_chars(" ") #Remove trailing spaces
-        .str.replace_all(r"\s+", " ") #Remove excessive intermediate spaces
-        .str.split(" ") #Split by spaces
-        .list.eval(pl.element().cast(pl.Int32)) #Convert to integers
-        .alias("neuron_position")
-    )
-    
-connections_data = connections_file.rename({
-    connections_config['pre_column']: "neuron_pre",
-    connections_config['post_column']: "neuron_post",
-    connections_config['weights_column']: "connection_weight",
-    connections_config['sign_column']: "connection_sign",
-})
+    position_data = extract_positions(position_file, config.neurons)
+connections_data = extract_connections(connections_file, config.connections)
 
 #Save data as parquet files
 print("Saving dataset")

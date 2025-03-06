@@ -9,11 +9,21 @@ dataset:
     position_file: "coordinates.csv"
     position_key_column: "root_id"
     position_column: "position"
+    position_column_format: "[X Y Z]"
   connections:
     connections_file: "connections_princeton_no_threshold.csv"
     pre_column: "pre_pt_root_id"
     post_column: "post_pt_root_id"
     weights_column: "syn_count"
 
-    sign_column: "nt_type"
-    sign_format: "name"
+    #Neurotransmitters
+    neurotransmitter_column: "nt_type"
+    neurotransmitter_format: "name" #Can be either name or number
+    neurotransmitter_mapping:
+      DA: -1
+      SER: -1
+      GABA: -1
+
+      OCT: 1
+      ACH: 1
+      GLUT: 1
