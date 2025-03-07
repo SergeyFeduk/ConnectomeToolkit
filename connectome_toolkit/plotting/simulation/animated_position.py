@@ -1,9 +1,12 @@
 import plotly.graph_objects as go
 import numpy as np
 
-def plot_animated_neurons_firing(loaded_neuron_coordinates_dict, time, spike_times, frame_duration=10, skip_frames=0):
+from connectome_toolkit.simulation.data import SpikesSimulationData
+
+def plot_animated_neurons_firing(loaded_neuron_coordinates_dict, data : SpikesSimulationData, skip_frames : int= 0):
     neuron_positions = []
     neuron_ids_for_plotting = []
+    frame_duration = 10
 
     for root_id, position_list in loaded_neuron_coordinates_dict.items():
         neuron_ids_for_plotting.append(root_id)
@@ -11,10 +14,10 @@ def plot_animated_neurons_firing(loaded_neuron_coordinates_dict, time, spike_tim
 
     neuron_positions_np = np.array(neuron_positions)
     color_timesteps = []
-    for t_index in range(len(time)):
+    for t_index in range(len(data.time)):
         colors = np.zeros(len(neuron_positions))
         for neuron_idx, neuron_id in enumerate(neuron_ids_for_plotting):
-            if time[t_index] in spike_times[neuron_id]:
+            if data.time[t_index] in data.spike_times[neuron_id]:
                 colors[neuron_idx] = 1
         color_timesteps.append(colors)
 

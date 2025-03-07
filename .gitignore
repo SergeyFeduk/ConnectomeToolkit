@@ -21,6 +21,7 @@ parquet_output/
 src/scripts/connectome.py
 src/scripts/prefilter_synapses.py
 src/scripts/combine_to_cartridge.py
+src/scripts/render_swc.py
 TODO.txt
 # Log files
 *.log

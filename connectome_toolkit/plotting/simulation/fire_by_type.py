@@ -1,10 +1,12 @@
 from collections import defaultdict
 import plotly.graph_objects as go
 
-def plot_spike_counts_by_type(spike_times, neuron_types):
+from connectome_toolkit.simulation.data import SpikesSimulationData
+
+def plot_spike_counts_by_type(data : SpikesSimulationData, neuron_types):
   """Plots the total number of spikes by neuron type."""
   spike_counts = defaultdict(int)
-  for neuron_id, spikes in spike_times.items():
+  for neuron_id, spikes in data.spike_times.items():
       neuron_type = neuron_types[neuron_id]
       spike_counts[neuron_type] += len(spikes)
 

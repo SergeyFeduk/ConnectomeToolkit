@@ -1,7 +1,8 @@
 from connectome_toolkit.serialization import CartridgeSerializer, Cartridge
 
-from connectome_toolkit.methods import LeakyIntegrateAndFire
-from connectome_toolkit.excitation_functions import smooth_bump
+from connectome_toolkit.simulation.methods import LeakyIntegrateAndFire
+from connectome_toolkit.simulation.data import SpikesSimulationData
+from connectome_toolkit.simulation.excitation_functions import smooth_bump
 from connectome_toolkit.utils import get_synaptic_lookup
 
 from connectome_toolkit.plotting.simulation import plot_fire_timings, plot_spike_counts_by_type, plot_animated_neurons_firing, plot_fire_rate_graph
@@ -32,11 +33,9 @@ lif.precompute_excitation(excitation_params)
 lif.precompute_acceleration_structure(neuron_types, stimulated_types)
 lif.run_simulation()
 
-time = lif.time
-spike_times = lif.spike_times
-
+sim_data : SpikesSimulationData = lif.get_data()
 # Plot everything
-plot_animated_neurons_firing(cartridge.neuron_positions_dict, time, spike_times, 10, 0).show(rendermode="webgl")
-plot_fire_timings(spike_times, neuron_ids, time).show(rendermode="webgl")
-plot_spike_counts_by_type(spike_times, neuron_types).show(rendermode="webgl")
-plot_fire_rate_graph(spike_times, neuron_ids, time, 5).show(rendermode="webgl")
+plot_animated_neurons_firing(cartridge.neuron_positions_dict, sim_data, 0).show()
+plot_fire_timings(neuron_ids, sim_data).show()
+plot_spike_counts_by_type(sim_data, neuron_types).show()
+plot_fire_rate_graph(neuron_ids, sim_data, 5).show()

@@ -2,7 +2,8 @@ import random
 import numpy as np
 from tqdm import tqdm
 from collections import defaultdict
-from connectome_toolkit.methods import SimulationMethod
+from connectome_toolkit.simulation.methods import SimulationMethod
+from connectome_toolkit.simulation.data import SpikesSimulationData
 
 class LeakyIntegrateAndFireParameters():
     def __init__(self, rest_voltage : float = -70, membrane_resistance : float = 10, tau_membrane : float = 10, 
@@ -21,7 +22,9 @@ class LeakyIntegrateAndFire(SimulationMethod):
 
     def __init__(self, excitation_function : callable, duration : float, timestep : float, neuron_ids : list[int], synapses : dict[tuple[int,int],tuple[float, float]], 
                  randomized_voltage : float = 15, parameters : LeakyIntegrateAndFireParameters = LeakyIntegrateAndFireParameters()):
-        super().__init__(excitation_function, duration, timestep)
+        #Data and base
+        self.simulation_data = SpikesSimulationData(neuron_ids)
+        super().__init__(excitation_function, duration, timestep, self.simulation_data)
         #Data
         self.neuron_ids = neuron_ids
         self.synapses = synapses
@@ -38,8 +41,6 @@ class LeakyIntegrateAndFire(SimulationMethod):
         for neuron_id in neuron_ids:
             self.voltage[neuron_id][0] = self.parameters.rest_voltage + random.uniform(0,randomized_voltage) #Apply randomized initial voltage
         self.g_syn = {neuron_id : np.zeros(len(self.time)) for neuron_id in neuron_ids}
-        #Collected data
-        self.spike_times = {neuron_id : [] for neuron_id in neuron_ids}
 
     def precompute_acceleration_structure(self, neuron_types : dict[int, str], stimulated_types : list[str]):
         for neuron_id in self.neuron_ids:
@@ -87,9 +88,8 @@ class LeakyIntegrateAndFire(SimulationMethod):
             self.g_syn[neuron_id][iteration+1] = self.g_syn[neuron_id][iteration] + dg_syn
             #Check for spike
             if self.voltage[neuron_id][iteration+1] >= self.parameters.threshold_voltage:
-                self.spike_times[neuron_id].append(self.time[iteration+1])
+                self.simulation_data.spike_times[neuron_id].append(self.time[iteration+1])
                 self.voltage[neuron_id][iteration+1] = self.parameters.reset_voltage
-
                 #Update g_syn of post neurons
                 for post_neuron_id in self.pre_to_post[neuron_id]:
                     synapse_post = self.synapses[(neuron_id, post_neuron_id)]
