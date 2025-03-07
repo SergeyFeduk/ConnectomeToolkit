@@ -17,11 +17,8 @@ Connectomes/
 OBSOLETE/
 parquet_output/
 
-#Internal scripts
-src/scripts/connectome.py
-src/scripts/prefilter_synapses.py
-src/scripts/combine_to_cartridge.py
-src/scripts/render_swc.py
+#Internal files
+connectome_toolkit/scripts/render_swc.py
 TODO.txt
 # Log files
 *.log
