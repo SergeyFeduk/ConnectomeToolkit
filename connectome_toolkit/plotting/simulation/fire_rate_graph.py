@@ -4,6 +4,7 @@ from connectome_toolkit.utils import calculate_population_firing_rate
 from connectome_toolkit.simulation.data import SpikesSimulationData
 
 def plot_fire_rate_graph(neuron_ids, data : SpikesSimulationData, window_size_ms = 5):
+    """Plots smoothed fire rate by time."""
     time_points_fr, firing_rates = calculate_population_firing_rate(data.spike_times, neuron_ids, data.time, window_size_ms)
 
     fig = go.Figure()

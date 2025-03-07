@@ -13,7 +13,6 @@ __pycache__/
 *.parquet
 *.cartridge
 
-Connectomes/
 OBSOLETE/
 parquet_output/
 
